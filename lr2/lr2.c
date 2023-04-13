@@ -29,7 +29,7 @@ int sSolve(int* n)
 	{
 		return -1;
 	}
-	else if ((*n % 8 == 3) || (*n % 8 == -3))
+	else if ((*n % 8 == 3) || (*n % 8 == 5))
 	{
 		return 1;
 	}
@@ -37,7 +37,7 @@ int sSolve(int* n)
 
 bool isModule(int *a, int *n)
 {
-	if ((*n % 4 == 3) && (*a % 4 == 3))
+	if ((*n % 4 == 3) && (*a % 4 == 5))
 	{
 		return true;
 	}
