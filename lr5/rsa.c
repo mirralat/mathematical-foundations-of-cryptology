@@ -16,6 +16,7 @@ char* Encryption(const char* input);
 
 int e, d, n;
 
+
 int gcd(int a, int b)
 {
     int q, r1, r2, r;
@@ -156,19 +157,34 @@ int KeyGeneration()
 
 char* Encryption(const char* input)
 {
-    printf("Starting encryption!");
-    char* cipher = NULL;
-    cipher = (char*)malloc(sizeof(input) * 100);
-    printf_s(cipher);
     KeyGeneration();
 
-    for (int i = 0; i < strlen(input); i++)
+    int inputLength = strlen(input);
+    int maxCipherLength = (inputLength * 6) + 1;  // Максимальная длина зашифрованной строки с учетом пробелов и завершающего символа '\0'
+    char* cipher = (char*)malloc(maxCipherLength * sizeof(char));  // Выделяем память для зашифрованной строки
+    cipher[0] = '\0';  // Обнуляем строку перед использованием strcat()
+
+    for (int i = 0; i < inputLength; i++)
     {
-        int value = toascii(input[i]);
-        int encrypted = FindT(value, e, n);
-        char temp[10];
+        int value = input[i];
+        int encrypted = FindT(value, e, n);  // Используем функцию FindT() для шифрования
+        char temp[12];  // Устанавливаем достаточный размер буфера
+        sprintf(temp, "%d ", encrypted);  // Преобразуем зашифрованное число в строку
         strcat(cipher, temp);
     }
-    printf_s(cipher);
+    char occurrence = '-';
+    int occurrenceIndex = -1;
+    int i = 0;
+    while (cipher[i] != '\0') {
+        if (cipher[i] == occurrence) {
+            occurrenceIndex = i;
+            break;
+        }
+        i++;
+    }
+    if (occurrenceIndex != -1) {
+        cipher[occurrenceIndex] = '\0';
+    }
+
     return cipher;
 }
